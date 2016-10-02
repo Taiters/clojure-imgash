@@ -1,6 +1,8 @@
 (ns clojure-imgash.core
   (use mikera.image.core)
   (use mikera.image.colours)
+  (use ring.middleware.params)
+  (use org.httpkit.server)
   (:gen-class))
 
 (defn abs [n]
@@ -57,15 +59,28 @@
     img))
 
 (defn write-image [n]
-  (let [img (create-img 9 10 n)]
-    (save img (format "images/%s.png" (clojure.string/replace n #"\W+" "_")))))
+  (let [img (create-img 7 10 n)]
+    (save img (format "/tmp/images/%s.png" n))))
+
+(defn generate-image [i]
+  (write-image i)
+  {:status  200
+   :headers {"Content-Type" "image/png"
+             "X-Accel-Redirect" (format "/internal_images/%s.png" i)}})
+
+(defn app [req]
+  (let [i (get-in req [:query-params "i"])]
+    (if (string? i)
+      (generate-image i)
+      {:status 400})))
 
 (defn -main
   [& args]
-  (let [stdin (line-seq (java.io.BufferedReader. *in*))]
-    (dorun
-      (pmap write-image stdin))
-    (shutdown-agents)))
+;  (let [stdin (line-seq (java.io.BufferedReader. *in*))]
+;    (dorun
+;      (pmap write-image stdin))
+;    (shutdown-agents)))
+  (run-server (wrap-params app) {:port 9000}))
 
 
   ;(println (map #(* % 255) (hsl-to-rgb 0 0 0))))
