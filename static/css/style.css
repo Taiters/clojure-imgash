@@ -1,0 +1,32 @@
+body {
+	background-color: #ecf0f1;
+}
+
+.container {
+	width: 320px;
+	text-align: center;
+	margin: 0 auto;
+}
+
+h1 {
+	margin-bottom: 100px;
+	margin-top: 60px;
+	font-family: 'Lobster', cursive;
+	font-size: 50px;
+	color: #34495e;
+}
+
+.image img {
+	border: 5px solid #7f8c8d;
+}
+
+input[type="text"] {
+	margin-top: 30px;
+	padding: 10px;
+	width: 300px;
+	border-radius: 7px;
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
+	border: 1px solid #bdc3c7;
+	outline: none;
+}

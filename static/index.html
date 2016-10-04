@@ -1,1 +1,70 @@
-<h1>HELLO</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+	<title>Imgash</title>
+
+	<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+	<div class="container">
+		<h1>Imgash</h1>
+		<div class="image">
+			<img id="imgash-img"/>
+		</div>
+		<input type="text" id="name" placeholder="Enter text here">
+		<div class="links">
+			Markdown
+		</div>
+	</div>
+	<script type="text/javascript">
+		function setImage (img, baseUrl, name) {
+			var urlEncodedName = encodeURIComponent(name);
+			var url = baseUrl + urlEncodedName;
+
+			img.src = url;
+		}
+
+		function getRandomItem (arr) {
+			var r = Math.random() * arr.length;
+			var i = Math.floor(r);
+
+			return arr[i];
+		};
+
+		(function () {
+		  var welcomeMessages = [
+				"Welcome to Imgash",
+				"Tell your friends",
+				"Wrong way, down a one way street!",
+				"Are you sure?",
+				"What do you want?",
+				"Great choice!"
+			];
+
+		  var baseUrl = "api/image.jpg?i=";
+			var input = document.getElementById('name');
+			var imgashImg = document.getElementById('imgash-img');
+			var message = getRandomItem(welcomeMessages);
+
+			input.onkeyup = function () {
+				var name = input.value;
+
+				setImage(imgashImg, baseUrl, name);
+			};
+
+			input.onclick = function () {
+				this.select();
+			};
+
+			setImage(imgashImg, baseUrl, message);
+
+			input.value = message;
+		})();
+	</script>
+</body>
+</html>

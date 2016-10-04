@@ -26,7 +26,8 @@
     (concat row (rest (reverse row)))))
 
 (defn get-random [items r]
-  (nth items (.nextInt r (count items))))
+  (let [i (if (< 0.4 (.nextFloat r)) 1 0)]
+    (nth items i)))
 
 (defn get-row-pixels [blocks block-size colours r]
   (let [bg (first colours)
@@ -59,14 +60,14 @@
     img))
 
 (defn write-image [n]
-  (let [img (create-img 7 10 n)]
-    (save img (format "/tmp/images/%s.png" n))))
+  (let [img (create-img 8 12 n)]
+    (save img (format "/tmp/images/%s.png" (hash n)))))
 
 (defn generate-image [i]
   (write-image i)
   {:status  200
    :headers {"Content-Type" "image/png"
-             "X-Accel-Redirect" (format "/internal_images/%s.png" i)}})
+             "X-Accel-Redirect" (format "/images/cached/%s.png" (hash i))}})
 
 (defn app [req]
   (let [i (get-in req [:query-params "i"])]
