@@ -17,12 +17,9 @@
 			<img id="imgash-img"/>
 		</div>
 		<input type="text" id="name" placeholder="Enter text here">
-		<div class="links">
-			Markdown
-		</div>
 	</div>
 	<script type="text/javascript">
-		function setImage (img, baseUrl, name) {
+		function setImgash (img, baseUrl, name) {
 			var urlEncodedName = encodeURIComponent(name);
 			var url = baseUrl + urlEncodedName;
 
@@ -46,7 +43,7 @@
 				"Great choice!"
 			];
 
-		  var baseUrl = "api/image.jpg?i=";
+		  var baseUrl = "/img.png?i=";
 			var input = document.getElementById('name');
 			var imgashImg = document.getElementById('imgash-img');
 			var message = getRandomItem(welcomeMessages);
@@ -54,14 +51,14 @@
 			input.onkeyup = function () {
 				var name = input.value;
 
-				setImage(imgashImg, baseUrl, name);
+				setImgash(imgashImg, baseUrl, name);
 			};
 
 			input.onclick = function () {
 				this.select();
 			};
 
-			setImage(imgashImg, baseUrl, message);
+			setImgash(imgashImg, baseUrl, message);
 
 			input.value = message;
 		})();
